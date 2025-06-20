@@ -5,7 +5,7 @@ import { setupDiceUI } from './DiceRoller.js';
 // Wait for the DOM to load before initializing any UI modules. Some browsers
 // execute module scripts before the page is fully parsed which can lead to
 // missing elements like the party section.
-document.addEventListener('DOMContentLoaded', () => {
+function init() {
     setupDiceUI();
 
     const partyContainer = document.getElementById('party-section');
@@ -16,7 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
     );
 
     enableModuleDragging();
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
+}
 
 function enableModuleDragging() {
     const container = document.querySelector('.container');
