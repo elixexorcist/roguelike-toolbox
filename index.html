@@ -82,11 +82,33 @@
         }
 
         #history {
+            height: 150px;
             max-height: 150px;
             overflow-y: auto;
             border: 1px solid #555;
             padding: 10px;
             border-radius: 4px;
+            background: #222;
+            scrollbar-width: thin;
+            scrollbar-color: #555 #333;
+        }
+
+        #history::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #history::-webkit-scrollbar-track {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        #history::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 4px;
+        }
+
+        #history::-webkit-scrollbar-thumb:hover {
+            background: #777;
         }
 
         #clear-history {
