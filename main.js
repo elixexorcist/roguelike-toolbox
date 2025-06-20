@@ -28,12 +28,19 @@ function enableModuleDragging() {
     const container = document.querySelector('.container');
     if (!container) return;
 
+    let startRects = new Map();
+
     container.querySelectorAll('.tool').forEach(mod => {
         mod.addEventListener('dragstart', () => {
             mod.classList.add('dragging');
+            startRects.clear();
+            container.querySelectorAll('.tool').forEach(el => {
+                startRects.set(el, el.getBoundingClientRect());
+            });
         });
         mod.addEventListener('dragend', () => {
             mod.classList.remove('dragging');
+            animateReorder(startRects, container);
         });
     });
 
@@ -64,4 +71,26 @@ function getDragAfterElement(container, y) {
         },
         { offset: Number.NEGATIVE_INFINITY }
     ).element;
+}
+
+function animateReorder(startRects, container) {
+    container.querySelectorAll('.tool').forEach(el => {
+        const start = startRects.get(el);
+        if (!start) return;
+        const end = el.getBoundingClientRect();
+        const dx = start.left - end.left;
+        const dy = start.top - end.top;
+        if (dx || dy) {
+            el.animate(
+                [
+                    { transform: `translate(${dx}px, ${dy}px)` },
+                    { transform: 'translate(0, 0)' }
+                ],
+                {
+                    duration: 200,
+                    easing: 'ease'
+                }
+            );
+        }
+    });
 }
