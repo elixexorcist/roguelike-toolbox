@@ -76,6 +76,53 @@
             margin-top: 15px;
             text-align: center;
         }
+
+        #history-container {
+            margin-top: 15px;
+        }
+
+        #history {
+            height: 150px;
+            overflow-y: auto;
+            border: 1px solid #555;
+            padding: 10px;
+            border-radius: 4px;
+            background: #222;
+            scrollbar-width: thin;
+            scrollbar-color: #555 #333;
+        }
+
+        #history::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #history::-webkit-scrollbar-track {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        #history::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 4px;
+        }
+
+        #history::-webkit-scrollbar-thumb:hover {
+            background: #777;
+        }
+
+        #clear-history {
+            margin-top: 5px;
+            padding: 6px 10px;
+            border: none;
+            background: #844;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #clear-history:hover {
+            background: #a55;
+        }
     </style>
 </head>
 <body>
@@ -95,6 +142,10 @@
         <button id="custom">+custom</button>
     </div>
     <div id="result"></div>
+    <div id="history-container">
+        <div id="history"></div>
+        <button id="clear-history">Clear History</button>
+    </div>
 </div>
 <script>
 function rollExpression(expr) {
@@ -125,14 +176,24 @@ function rollExpression(expr) {
     return { total, breakdown: breakdown.join(' + ') };
 }
 
+const historyDiv = document.getElementById('history');
+
 document.getElementById('roll').onclick = function() {
     const expr = document.getElementById('expression').value;
     const res = rollExpression(expr);
     if (isNaN(res.total)) {
         document.getElementById('result').textContent = 'Invalid expression.';
     } else {
-        document.getElementById('result').textContent = `${expr} = ${res.total} (rolled: ${res.breakdown})`;
+        const text = `${expr} = ${res.total} (rolled: ${res.breakdown})`;
+        document.getElementById('result').textContent = text;
+        const entry = document.createElement('div');
+        entry.textContent = text;
+        historyDiv.prepend(entry);
     }
+};
+
+document.getElementById('clear-history').onclick = () => {
+    historyDiv.innerHTML = '';
 };
 
 document.querySelectorAll('#dice-buttons button[data-dice]').forEach(btn => {
