@@ -171,6 +171,19 @@
 <script type="module">
 import Stats from './Stats.js';
 import Party from './Party.js';
+    <div id="party-section">
+        <h2>Party</h2>
+        <div class="party-member" id="player-slot">
+            <div class="member-name"></div>
+            <div class="member-stats"></div>
+        </div>
+        <div class="party-member empty">Empty Slot</div>
+        <div class="party-member empty">Empty Slot</div>
+        <div class="party-member empty">Empty Slot</div>
+    </div>
+</div>
+<script type="module">
+import Stats from './Stats.js';
 
 function rollExpression(expr) {
     expr = expr.replace(/\s+/g, '');
@@ -239,6 +252,11 @@ document.getElementById('custom').onclick = () => {
 const partyContainer = document.getElementById('party-section');
 const party = new Party(partyContainer);
 party.addMember(new Stats({ name: 'Player', maxHp: 20, attack: 5, defense: 2 }));
+const player = new Stats({ name: 'Player', maxHp: 20, attack: 5, defense: 2 });
+const playerSlot = document.getElementById('player-slot');
+playerSlot.querySelector('.member-name').textContent = player.name;
+playerSlot.querySelector('.member-stats').textContent =
+    `HP: ${player.hp}/${player.maxHp}  ATK: ${player.attack}  DEF: ${player.defense}`;
 </script>
 </body>
 </html>
