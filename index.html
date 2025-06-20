@@ -9,20 +9,27 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #1d1f21, #282a2e);
             color: #ddd;
-            height: 100vh;
             margin: 0;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
+            padding: 20px;
         }
 
         .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            width: 95%;
+            max-width: 1000px;
+        }
+
+        .tool {
             background: #333;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            width: 90%;
-            max-width: 500px;
         }
 
         h1 {
@@ -127,7 +134,7 @@
 
         /* Party display */
         #party-section {
-            margin-top: 20px;
+            margin-top: 0;
         }
 
         .party-member {
@@ -146,27 +153,31 @@
 </head>
 <body>
 <div class="container">
-    <h1>Dice Roller</h1>
-    <div id="controls">
-        <input type="text" id="expression" placeholder="e.g. 1d20+5+1d6" />
-        <button id="roll">Roll</button>
-    </div>
-    <div id="dice-buttons">
-        <button data-dice="4">+d4</button>
-        <button data-dice="6">+d6</button>
-        <button data-dice="8">+d8</button>
-        <button data-dice="10">+d10</button>
-        <button data-dice="12">+d12</button>
-        <button data-dice="20">+d20</button>
-        <button id="custom">+custom</button>
-    </div>
-    <div id="result"></div>
-    <div id="history-container">
-        <div id="history"></div>
-        <button id="clear-history">Clear History</button>
-    </div>
+    <section class="tool" id="dice-tool">
+        <h1>Dice Roller</h1>
+        <div id="controls">
+            <input type="text" id="expression" placeholder="e.g. 1d20+5+1d6" />
+            <button id="roll">Roll</button>
+        </div>
+        <div id="dice-buttons">
+            <button data-dice="4">+d4</button>
+            <button data-dice="6">+d6</button>
+            <button data-dice="8">+d8</button>
+            <button data-dice="10">+d10</button>
+            <button data-dice="12">+d12</button>
+            <button data-dice="20">+d20</button>
+            <button id="custom">+custom</button>
+        </div>
+        <div id="result"></div>
+        <div id="history-container">
+            <div id="history"></div>
+            <button id="clear-history">Clear History</button>
+        </div>
+    </section>
 
-    <div id="party-section"></div>
+    <section class="tool" id="party-tool">
+        <div id="party-section"></div>
+    </section>
 </div>
 <script type="module" src="main.js"></script>
 </body>
