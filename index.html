@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dice Roller</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 20px; }
+#controls button { margin-right: 5px; }
+#result { margin-top: 20px; }
+</style>
+</head>
+<body>
+<h1>Dice Roller</h1>
+<div id="controls">
+<input type="text" id="expression" placeholder="e.g. 1d20+5+1d6" style="width: 200px;"/>
+<button id="roll">Roll</button>
+</div>
+<div id="dice-buttons" style="margin-top:10px;">
+<button data-dice="4">+d4</button>
+<button data-dice="6">+d6</button>
+<button data-dice="8">+d8</button>
+<button data-dice="10">+d10</button>
+<button data-dice="12">+d12</button>
+<button data-dice="20">+d20</button>
+<button id="custom">+custom</button>
+</div>
+<div id="result"></div>
+<script>
+function rollExpression(expr) {
+    expr = expr.replace(/\s+/g, '');
+    const tokens = expr.match(/[+-]?\d+d\d+|[+-]?\d+/g);
+    if (!tokens) return NaN;
+    let total = 0;
+    let breakdown = [];
+    for (const token of tokens) {
+        let sign = 1;
+        let t = token;
+        if (t[0] === '+' || t[0] === '-') {
+            sign = t[0] === '-' ? -1 : 1;
+            t = t.slice(1);
+        }
+        if (t.includes('d')) {
+            const [num, sides] = t.split('d').map(Number);
+            for (let i = 0; i < num; i++) {
+                const roll = Math.floor(Math.random() * sides) + 1;
+                total += sign * roll;
+                breakdown.push(`${sign===-1?'-':''}${roll}`);
+            }
+        } else {
+            total += sign * parseInt(t, 10);
+            breakdown.push(`${sign===-1?'-':''}${parseInt(t, 10)}`);
+        }
+    }
+    return { total, breakdown: breakdown.join(' + ') };
+}
+
+document.getElementById('roll').onclick = function() {
+    const expr = document.getElementById('expression').value;
+    const res = rollExpression(expr);
+    if (isNaN(res.total)) {
+        document.getElementById('result').textContent = 'Invalid expression.';
+    } else {
+        document.getElementById('result').textContent = `${expr} = ${res.total} (rolled: ${res.breakdown})`;
+    }
+};
+
+document.querySelectorAll('#dice-buttons button[data-dice]').forEach(btn => {
+    btn.onclick = () => {
+        const dice = btn.getAttribute('data-dice');
+        const input = document.getElementById('expression');
+        input.value += (input.value ? '+' : '') + '1d' + dice;
+    };
+});
+
+document.getElementById('custom').onclick = () => {
+    const sides = prompt('Number of sides?');
+    if (!sides) return;
+    const input = document.getElementById('expression');
+    input.value += (input.value ? '+' : '') + '1d' + parseInt(sides, 10);
+};
+</script>
+</body>
+</html>
