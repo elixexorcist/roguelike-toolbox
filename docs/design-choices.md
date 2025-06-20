@@ -4,7 +4,7 @@ This document explains the rationale behind the structure and technology choices
 
 ## Modular Scripts
 
-Initially the dice roller lived completely inside `index.html`. The project now separates the logic into small ES modules such as `DiceRoller.js`, `Stats.js` and `Party.js`. Each script focuses on a single responsibility which keeps the HTML file concise and makes the code easier to understand or extend. Users can still open the page directly in a browser because the modules are loaded using standard `<script type="module">` tags.
+Initially the dice roller lived completely inside `index.html`. The project now separates the logic into small ES modules such as `src/DiceRoller.js`, `src/Stats.js` and `src/Party.js`. Each script focuses on a single responsibility which keeps the HTML file concise and makes the code easier to understand or extend. Users can still open the page directly in a browser because the modules are loaded using standard `<script type="module">` tags.
 
 ## Technology Stack
 
@@ -29,4 +29,4 @@ Many dice rollers use a server to manage state or generate random numbers. Here,
 
 ## Stats Module
 
-Game entities often share the same set of statistics regardless of whether they are controlled by the player or are enemies. `Stats.js` defines a small class with hit points, attack, defense and speed values. Keeping this logic separate from the dice roller lets other tools in the toolbox reuse the same implementation.
+Game entities often share the same set of statistics regardless of whether they are controlled by the player or are enemies. `src/Stats.js` defines a small class with hit points, attack, defense and speed values. Keeping this logic separate from the dice roller lets other tools in the toolbox reuse the same implementation.

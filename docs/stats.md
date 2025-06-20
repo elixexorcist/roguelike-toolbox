@@ -1,6 +1,6 @@
 # Stats Module
 
-`Stats.js` exports a small class used to track basic RPG statistics. The same structure can be used for the player, party members or enemies.
+`src/Stats.js` exports a small class used to track basic RPG statistics. The same structure can be used for the player, party members or enemies.
 
 ## Fields
 - `name` – a label for the entity.
@@ -16,7 +16,7 @@
 - `isAlive()` – returns `true` if `hp` is above zero.
 
 ```javascript
-import Stats from './Stats.js';
+import Stats from '../src/Stats.js';
 
 const hero = new Stats({ name: 'Hero', maxHp: 20, attack: 5 });
 const goblin = new Stats({ name: 'Goblin', maxHp: 8, attack: 3, defense: 1 });
