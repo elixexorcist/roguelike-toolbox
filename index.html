@@ -124,6 +124,24 @@
         #clear-history:hover {
             background: #a55;
         }
+
+        /* Party display */
+        #party-section {
+            margin-top: 20px;
+        }
+
+        .party-member {
+            border: 1px solid #555;
+            padding: 10px;
+            border-radius: 4px;
+            background: #222;
+            margin-bottom: 10px;
+        }
+
+        .party-member.empty {
+            color: #666;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -147,8 +165,13 @@
         <div id="history"></div>
         <button id="clear-history">Clear History</button>
     </div>
+
+    <div id="party-section"></div>
 </div>
-<script>
+<script type="module">
+import Stats from './Stats.js';
+import Party from './Party.js';
+
 function rollExpression(expr) {
     expr = expr.replace(/\s+/g, '');
     const tokens = expr.match(/[+-]?\d+d\d+|[+-]?\d+/g);
@@ -211,6 +234,11 @@ document.getElementById('custom').onclick = () => {
     const input = document.getElementById('expression');
     input.value += (input.value ? '+' : '') + '1d' + parseInt(sides, 10);
 };
+
+// Party rendering
+const partyContainer = document.getElementById('party-section');
+const party = new Party(partyContainer);
+party.addMember(new Stats({ name: 'Player', maxHp: 20, attack: 5, defense: 2 }));
 </script>
 </body>
 </html>
