@@ -2,9 +2,9 @@
 
 This document explains the rationale behind the structure and technology choices in this repository.
 
-## Single HTML File
+## Modular Scripts
 
-The dice roller is implemented entirely in `index.html`. Keeping all HTML, CSS, and JavaScript in one file makes distribution trivial. Users can simply open the file in any modern browser without installing additional dependencies. This approach is well suited for a small tool where dynamic loading or complex build steps would add unnecessary overhead.
+Initially the dice roller lived completely inside `index.html`. The project now separates the logic into small ES modules such as `DiceRoller.js`, `Stats.js` and `Party.js`. Each script focuses on a single responsibility which keeps the HTML file concise and makes the code easier to understand or extend. Users can still open the page directly in a browser because the modules are loaded using standard `<script type="module">` tags.
 
 ## Technology Stack
 
