@@ -29,31 +29,39 @@ function enableModuleDragging() {
     if (!container) return;
 
     let startRects = new Map();
+    let dragging = null;
 
     container.querySelectorAll('.tool').forEach(mod => {
-        mod.addEventListener('dragstart', () => {
+        mod.style.touchAction = 'none';
+
+        mod.addEventListener('pointerdown', e => {
+            dragging = mod;
             mod.classList.add('dragging');
             startRects.clear();
             container.querySelectorAll('.tool').forEach(el => {
                 startRects.set(el, el.getBoundingClientRect());
             });
+            mod.setPointerCapture(e.pointerId);
         });
-        mod.addEventListener('dragend', () => {
+
+        mod.addEventListener('pointerup', e => {
+            if (dragging !== mod) return;
+            dragging = null;
             mod.classList.remove('dragging');
+            mod.releasePointerCapture(e.pointerId);
             animateReorder(startRects, container);
         });
-    });
 
-    container.addEventListener('dragover', e => {
-        e.preventDefault();
-        const dragging = container.querySelector('.dragging');
-        if (!dragging) return;
-        const afterEl = getDragAfterElement(container, e.clientY);
-        if (afterEl == null) {
-            container.appendChild(dragging);
-        } else {
-            container.insertBefore(dragging, afterEl);
-        }
+        mod.addEventListener('pointermove', e => {
+            if (dragging !== mod) return;
+            e.preventDefault();
+            const afterEl = getDragAfterElement(container, e.clientY);
+            if (afterEl == null) {
+                container.appendChild(mod);
+            } else {
+                container.insertBefore(mod, afterEl);
+            }
+        });
     });
 }
 
