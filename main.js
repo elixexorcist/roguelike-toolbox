@@ -76,6 +76,8 @@ function enableModuleDragging() {
 
             animateReorder(startRects, container);
         });
+            animateReorder(startRects, container);
+        });
             mod.releasePointerCapture(e.pointerId);
             animateReorder(startRects, container);
         });
