@@ -40,6 +40,14 @@ function enableModuleDragging() {
         mod.style.touchAction = 'none';
 
         mod.addEventListener('pointerdown', e => {
+            if (
+                e.target.closest(
+                    'button, input, textarea, select, option, label, a'
+                )
+            ) {
+                return; // allow normal interaction with form controls
+            }
+
             e.preventDefault();
             dragging = mod;
             dragRect = mod.getBoundingClientRect();
