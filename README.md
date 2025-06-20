@@ -7,3 +7,14 @@ This repository contains small utilities for roguelike development. The current 
 - **Party Module** – `Party.js` renders a small party UI where characters are displayed in individual slots. It is automatically populated with a sample player when the page loads.
 
 Additional documentation for each tool can be found in the `Docs` directory.
+
+## Development
+
+Install the dev dependencies and start a local server with:
+
+```bash
+npm install
+npm start
+```
+
+This uses [`http-server`](https://www.npmjs.com/package/http-server) to serve `index.html` so the ES modules load correctly.
