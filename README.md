@@ -25,3 +25,5 @@ Use the floating **Report a Bug** button in the bottom-right corner of the page
 to open a dialog box. Select the affected module from the drop-down list,
 describe the problem, and click **Submit** to create a GitHub issue pre-populated
 with your report and tags.
+If your browser does not support the `<dialog>` element, clicking the button will
+fall back to a simple set of prompts before opening the issue on GitHub.

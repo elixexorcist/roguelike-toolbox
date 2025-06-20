@@ -8,8 +8,27 @@ export function setupBugReportUI() {
 
     if (!openButton || !dialog || !submit || !cancel || !desc || !moduleSelect) return;
 
+    const sendReport = (text, module) => {
+        const mod = module || 'site';
+        const labelSlug = mod.replace(/\s+/g, '').toLowerCase();
+        const labels = encodeURIComponent(`bug,${labelSlug}`);
+        const body = encodeURIComponent(`Module: ${mod}\n\n${text.trim()}`);
+        const title = encodeURIComponent('Bug Report');
+        const url =
+            `https://github.com/elixexorcist/roguelike-toolbox/issues/new?title=${title}&body=${body}&labels=${labels}`;
+        window.open(url, '_blank');
+    };
+
     openButton.addEventListener('click', () => {
-        dialog.showModal();
+        if (typeof dialog.showModal === 'function') {
+            dialog.showModal();
+        } else {
+            const text = prompt('Describe the bug');
+            if (text) {
+                const module = prompt('Affected module?', 'site');
+                sendReport(text, module);
+            }
+        }
     });
 
     cancel.addEventListener('click', () => {
@@ -17,13 +36,7 @@ export function setupBugReportUI() {
     });
 
     submit.addEventListener('click', () => {
-        const module = moduleSelect.value || 'site';
-        const labelSlug = module.replace(/\s+/g, '').toLowerCase();
-        const labels = encodeURIComponent(`bug,${labelSlug}`);
-        const body = encodeURIComponent(`Module: ${module}\n\n${desc.value.trim()}`);
-        const title = encodeURIComponent('Bug Report');
-        const url = `https://github.com/elixexorcist/roguelike-toolbox/issues/new?title=${title}&body=${body}&labels=${labels}`;
-        window.open(url, '_blank');
+        sendReport(desc.value, moduleSelect.value);
         dialog.close();
         desc.value = '';
     });
