@@ -23,7 +23,9 @@ This uses [`http-server`](https://www.npmjs.com/package/http-server) to serve `i
 ## Bug Reporting
 Use the floating **Report a Bug** button in the bottom-right corner of the page
 to open a dialog box. Select the affected module from the drop-down list,
-describe the problem, and click **Submit** to create a GitHub issue pre-populated
-with your report and tags.
-If your browser does not support the `<dialog>` element, clicking the button will
-fall back to a simple set of prompts before opening the issue on GitHub.
+describe the problem, and click **Submit**. If a `BUG_REPORT_TOKEN` variable is
+defined on the page, the tool will automatically create an issue via the
+GitHub API including your browser information. Without a token, or if the
+request fails, it falls back to opening the GitHub issue form with the details
+pre‑filled. Browsers that do not support the `<dialog>` element will still
+prompt for text before opening the GitHub form.
