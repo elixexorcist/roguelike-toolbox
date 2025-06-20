@@ -43,6 +43,7 @@ function enableModuleDragging() {
             dragRect = mod.getBoundingClientRect();
             dragStartX = e.clientX;
             dragStartY = e.clientY;
+            dragging = mod;
             mod.classList.add('dragging');
             startRects.clear();
             container.querySelectorAll('.tool').forEach(el => {
@@ -74,6 +75,20 @@ function enableModuleDragging() {
             }
 
             animateReorder(startRects, container);
+        });
+            mod.releasePointerCapture(e.pointerId);
+            animateReorder(startRects, container);
+        });
+
+        mod.addEventListener('pointermove', e => {
+            if (dragging !== mod) return;
+            e.preventDefault();
+            const afterEl = getDragAfterElement(container, e.clientY);
+            if (afterEl == null) {
+                container.appendChild(mod);
+            } else {
+                container.insertBefore(mod, afterEl);
+            }
         });
     });
 }
