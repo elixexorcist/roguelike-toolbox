@@ -124,6 +124,24 @@
         #clear-history:hover {
             background: #a55;
         }
+
+        /* Party display */
+        #party-section {
+            margin-top: 20px;
+        }
+
+        .party-member {
+            border: 1px solid #555;
+            padding: 10px;
+            border-radius: 4px;
+            background: #222;
+            margin-bottom: 10px;
+        }
+
+        .party-member.empty {
+            color: #666;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -147,8 +165,21 @@
         <div id="history"></div>
         <button id="clear-history">Clear History</button>
     </div>
+
+    <div id="party-section">
+        <h2>Party</h2>
+        <div class="party-member" id="player-slot">
+            <div class="member-name"></div>
+            <div class="member-stats"></div>
+        </div>
+        <div class="party-member empty">Empty Slot</div>
+        <div class="party-member empty">Empty Slot</div>
+        <div class="party-member empty">Empty Slot</div>
+    </div>
 </div>
-<script>
+<script type="module">
+import Stats from './Stats.js';
+
 function rollExpression(expr) {
     expr = expr.replace(/\s+/g, '');
     const tokens = expr.match(/[+-]?\d+d\d+|[+-]?\d+/g);
@@ -211,6 +242,13 @@ document.getElementById('custom').onclick = () => {
     const input = document.getElementById('expression');
     input.value += (input.value ? '+' : '') + '1d' + parseInt(sides, 10);
 };
+
+// Party rendering
+const player = new Stats({ name: 'Player', maxHp: 20, attack: 5, defense: 2 });
+const playerSlot = document.getElementById('player-slot');
+playerSlot.querySelector('.member-name').textContent = player.name;
+playerSlot.querySelector('.member-stats').textContent =
+    `HP: ${player.hp}/${player.maxHp}  ATK: ${player.attack}  DEF: ${player.defense}`;
 </script>
 </body>
 </html>
