@@ -26,3 +26,7 @@ Results are stored in a scrollable log so players can review previous rolls. The
 
 Many dice rollers use a server to manage state or generate random numbers. Here, randomness comes from `Math.random` in the browser. This avoids setup costs and ensures the tool works entirely offline. Should the project expand, server functionality or a build system can be added later without rewriting the core logic.
 
+
+## Stats Module
+
+Game entities often share the same set of statistics regardless of whether they are controlled by the player or are enemies. `Stats.js` defines a small class with hit points, attack, defense and speed values. Keeping this logic separate from the dice roller lets other tools in the toolbox reuse the same implementation.
