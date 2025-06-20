@@ -159,6 +159,61 @@
             color: #666;
             text-align: center;
         }
+
+        #bug-report-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 16px;
+            background: #588;
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        #bug-report-button:hover {
+            background: #477;
+        }
+
+        #bug-dialog {
+            border: none;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 400px;
+        }
+
+        #bug-description {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: none;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        #bug-module {
+            width: 100%;
+            margin-top: 10px;
+            padding: 8px;
+            border-radius: 4px;
+            border: none;
+        }
+
+        #submit-bug {
+            padding: 6px 12px;
+            border: none;
+            background: #588;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #submit-bug:hover {
+            background: #477;
+        }
     </style>
 </head>
 <body>
@@ -188,7 +243,27 @@
     <section class="tool" id="party-tool">
         <div id="party-section"></div>
     </section>
+
 </div>
+
+<button id="bug-report-button">Report a Bug</button>
+
+<dialog id="bug-dialog">
+    <h2>Report a Bug</h2>
+    <select id="bug-module">
+        <option value="site">Site as a whole</option>
+        <option value="dice">Dice Roller</option>
+        <option value="party">Party Module</option>
+        <option value="stats">Stats Module</option>
+        <option value="other">Other</option>
+    </select>
+    <textarea id="bug-description" rows="4" placeholder="Describe the bug"></textarea>
+    <div style="text-align:right;margin-top:10px;">
+        <button id="submit-bug" type="button">Submit</button>
+        <button id="cancel-bug" type="button">Cancel</button>
+    </div>
+</dialog>
+
 <script type="module" src="./src/main.js"></script>
 </body>
 </html>

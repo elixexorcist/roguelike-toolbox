@@ -1,12 +1,14 @@
 import Stats from './Stats.js';
 import Party from './Party.js';
 import { setupDiceUI } from './DiceRoller.js';
+import { setupBugReportUI } from './BugReporter.js';
 
 // Wait for the DOM to load before initializing any UI modules. Some browsers
 // execute module scripts before the page is fully parsed which can lead to
 // missing elements like the party section.
 function init() {
     setupDiceUI();
+    setupBugReportUI();
 
     const partyContainer = document.getElementById('party-section');
     if (!partyContainer) return;
