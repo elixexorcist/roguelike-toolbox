@@ -58,6 +58,28 @@ function enableModuleDragging() {
             const dx = e.clientX - dragStartX;
             const dy = e.clientY - dragStartY;
             mod.style.transform = `translate(${dx}px, ${dy}px)`;
+
+            const afterEl = getDragAfterElement(container, e.clientY);
+            const needMove =
+                (afterEl === null && container.lastElementChild !== mod) ||
+                (afterEl !== null && afterEl.previousElementSibling !== mod);
+
+            if (needMove) {
+                startRects.clear();
+                container.querySelectorAll('.tool').forEach(el => {
+                    startRects.set(el, el.getBoundingClientRect());
+                });
+
+                if (afterEl == null) {
+                    container.appendChild(mod);
+                } else {
+                    container.insertBefore(mod, afterEl);
+                }
+                animateReorder(startRects, container);
+            }
+        });
+
+        const finishDrag = e => {
         });
 
         mod.addEventListener('pointerup', e => {
@@ -66,6 +88,10 @@ function enableModuleDragging() {
             mod.classList.remove('dragging');
             mod.style.transform = '';
             mod.releasePointerCapture(e.pointerId);
+            startRects.clear();
+            container.querySelectorAll('.tool').forEach(el => {
+                startRects.set(el, el.getBoundingClientRect());
+            });
 
             const afterEl = getDragAfterElement(container, e.clientY);
             if (afterEl == null) {
@@ -74,6 +100,11 @@ function enableModuleDragging() {
                 container.insertBefore(mod, afterEl);
             }
 
+            animateReorder(startRects, container);
+        };
+
+        mod.addEventListener('pointerup', finishDrag);
+        mod.addEventListener('pointercancel', finishDrag);
             animateReorder(startRects, container);
         });
             animateReorder(startRects, container);
