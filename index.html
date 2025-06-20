@@ -166,6 +166,11 @@
         <button id="clear-history">Clear History</button>
     </div>
 
+    <div id="party-section"></div>
+</div>
+<script type="module">
+import Stats from './Stats.js';
+import Party from './Party.js';
     <div id="party-section">
         <h2>Party</h2>
         <div class="party-member" id="player-slot">
@@ -244,6 +249,9 @@ document.getElementById('custom').onclick = () => {
 };
 
 // Party rendering
+const partyContainer = document.getElementById('party-section');
+const party = new Party(partyContainer);
+party.addMember(new Stats({ name: 'Player', maxHp: 20, attack: 5, defense: 2 }));
 const player = new Stats({ name: 'Player', maxHp: 20, attack: 5, defense: 2 });
 const playerSlot = document.getElementById('player-slot');
 playerSlot.querySelector('.member-name').textContent = player.name;
