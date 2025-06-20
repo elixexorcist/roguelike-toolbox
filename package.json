@@ -1,0 +1,14 @@
+{
+  "name": "roguelike-toolbox",
+  "version": "1.0.0",
+  "description": "Utilities for roguelike development",
+  "type": "module",
+  "main": "main.js",
+  "scripts": {
+    "start": "http-server -c-1",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
