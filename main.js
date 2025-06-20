@@ -29,31 +29,78 @@ function enableModuleDragging() {
     if (!container) return;
 
     let startRects = new Map();
+    let dragging = null;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let dragRect = null;
 
     container.querySelectorAll('.tool').forEach(mod => {
-        mod.addEventListener('dragstart', () => {
+        mod.style.touchAction = 'none';
+
+        mod.addEventListener('pointerdown', e => {
+            e.preventDefault();
+            dragging = mod;
+            dragRect = mod.getBoundingClientRect();
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
             mod.classList.add('dragging');
             startRects.clear();
             container.querySelectorAll('.tool').forEach(el => {
                 startRects.set(el, el.getBoundingClientRect());
             });
+            mod.setPointerCapture(e.pointerId);
         });
-        mod.addEventListener('dragend', () => {
-            mod.classList.remove('dragging');
-            animateReorder(startRects, container);
-        });
-    });
 
-    container.addEventListener('dragover', e => {
-        e.preventDefault();
-        const dragging = container.querySelector('.dragging');
-        if (!dragging) return;
-        const afterEl = getDragAfterElement(container, e.clientY);
-        if (afterEl == null) {
-            container.appendChild(dragging);
-        } else {
-            container.insertBefore(dragging, afterEl);
-        }
+        mod.addEventListener('pointermove', e => {
+            if (dragging !== mod) return;
+            e.preventDefault();
+            const dx = e.clientX - dragStartX;
+            const dy = e.clientY - dragStartY;
+            mod.style.transform = `translate(${dx}px, ${dy}px)`;
+
+            const afterEl = getDragAfterElement(container, e.clientY);
+            const needMove =
+                (afterEl === null && container.lastElementChild !== mod) ||
+                (afterEl !== null && afterEl.previousElementSibling !== mod);
+
+            if (needMove) {
+                startRects.clear();
+                container.querySelectorAll('.tool').forEach(el => {
+                    startRects.set(el, el.getBoundingClientRect());
+                });
+
+                if (afterEl == null) {
+                    container.appendChild(mod);
+                } else {
+                    container.insertBefore(mod, afterEl);
+                }
+                animateReorder(startRects, container);
+            }
+        });
+
+        const finishDrag = e => {
+            if (dragging !== mod) return;
+            dragging = null;
+            mod.classList.remove('dragging');
+            mod.style.transform = '';
+            mod.releasePointerCapture(e.pointerId);
+            startRects.clear();
+            container.querySelectorAll('.tool').forEach(el => {
+                startRects.set(el, el.getBoundingClientRect());
+            });
+
+            const afterEl = getDragAfterElement(container, e.clientY);
+            if (afterEl == null) {
+                container.appendChild(mod);
+            } else {
+                container.insertBefore(mod, afterEl);
+            }
+
+            animateReorder(startRects, container);
+        };
+
+        mod.addEventListener('pointerup', finishDrag);
+        mod.addEventListener('pointercancel', finishDrag);
     });
 }
 
