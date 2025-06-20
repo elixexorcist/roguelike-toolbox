@@ -19,3 +19,7 @@ npm start
 ```
 
 This uses [`http-server`](https://www.npmjs.com/package/http-server) to serve `index.html` so the ES modules load correctly.
+
+## Bug Reporting
+
+Use the "Report a Bug" section of the web page to send issues directly to the GitHub repo. Describe the problem and click **Submit Bug** to open a new GitHub issue pre-populated with your report.

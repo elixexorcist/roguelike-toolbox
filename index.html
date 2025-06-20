@@ -159,6 +159,28 @@
             color: #666;
             text-align: center;
         }
+
+        #bug-description {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: none;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        #submit-bug {
+            padding: 6px 10px;
+            border: none;
+            background: #588;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #submit-bug:hover {
+            background: #477;
+        }
     </style>
 </head>
 <body>
@@ -187,6 +209,12 @@
 
     <section class="tool" id="party-tool">
         <div id="party-section"></div>
+    </section>
+
+    <section class="tool" id="bug-tool">
+        <h1>Report a Bug</h1>
+        <textarea id="bug-description" rows="4" placeholder="Describe the bug"></textarea>
+        <button id="submit-bug">Submit Bug</button>
     </section>
 </div>
 <script type="module" src="./src/main.js"></script>
